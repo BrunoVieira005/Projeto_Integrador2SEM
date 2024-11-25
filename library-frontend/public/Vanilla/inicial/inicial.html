@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Inter|Sarala&display=swap" rel="stylesheet" />
+    <link href="css/inicial.css" rel="stylesheet" />
+    <title>Pág. Inicial</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="icon"></div>
+            <span class="header-title">Mange Book</span>
+        </div>
+
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-content">
+                <ul class>
+                    <li><a href="#">Em destaque</a></li>
+                    <li><a href="#">Novos</a></li>
+                </ul>
+            </div>
+        </aside>
+
+        <div class="search-container">
+            <input type="text" class="search-bar" placeholder="Buscar...">
+            <img src="images/filter.png" alt="Filtro" class="filter-icon">
+            <button class="search-button">🔍</button>
+        </div>        
+
+        <h2 class="discover-title">Descubra</h2>
+
+        <div class="book-container">
+            <div class="book-card" data-title="Título 1">
+                <a href="../livro/livro.html">
+                    <img src="images/Livro.png" alt="Livro 1" class="book-image">
+                </a>
+                    <span class="book-title">Título 1</span>
+            </div>
+            <div class="book-card" data-title="Título 2">
+                <a href="../livro/livro.html">
+                <img src="images/Livro.png" alt="Livro 2" class="book-image">
+            </a>
+                <span class="book-title">Título 2</span>
+            </div>
+            <div class="book-card" data-title="Título 3">
+                <a href="../livro/livro.html">
+                <img src="images/Livro.png" alt="Livro 3" class="book-image">
+            </a>
+                <span class="book-title">Título 3</span>
+            </div>
+            <div class="book-card" data-title="Título 4">
+                <a href="../livro/livro.html">
+                <img src="images/Livro.png" alt="Livro 4" class="book-image">
+            </a>
+                <span class="book-title">Título 4</span>
+            </div>
+            <div class="book-card" data-title="Título 5">
+                <a href="../livro/livro.html">
+                <img src="images/Livro.png" alt="Livro 5" class="book-image">
+            </a>
+                <span class="book-title">Título 5</span>
+            
+            </div>
+            <div class="book-card" data-title="Título 6">
+                <a href="../livro/livro.html">
+                <img src="images/Livro.png" alt="Livro 6" class="book-image">
+            </a>
+                <span class="book-title">Título 6</span>
+            
+            </div>
+            <div class="book-card" data-title="Título 7">
+                <a href="../livro/livro.html">
+                <img src="images/Livro.png" alt="Livro 7" class="book-image">
+            </a>
+                <span class="book-title">Título 7</span>
+            
+            </div>
+            <div class="book-card" data-title="Título 8">
+                <a href="../livro/livro.html">
+                <img src="images/Livro.png" alt="Livro 8" class="book-image">
+            </a>
+                <span class="book-title">Título 8</span>
+            </div>
+
+                <!-- Teste da página 2 dos livros -->
+            <div class="book-card" data-title="Título 9">
+                <a href="../livro/livro.html">
+                <img src="images/Livro.png" alt="Livro 9" class="book-image">
+            </a>
+                <span class="book-title">Título 9</span>
+            </div>
+            <div class="book-card" data-title="Título 10">
+                <a href="../livro/livro.html">
+                <img src="images/Livro.png" alt="Livro 10" class="book-image">
+            </a>
+                <span class="book-title">Título 10</span>
+            </a>
+            </div>
+
+        </div>
+        
+    <script>
+
+        /* Script para função da sidebar aberta ao clicar no botão de Menu */
+        const menuButton = document.getElementById('menuButton');
+        const sidebar = document.getElementById('sidebar');
+        
+        menuButton.addEventListener('click', () => {
+            sidebar.classList.toggle('open');
+        });
+
+        /* Script para função de pesquisa */
+        const searchBar = document.querySelector('.search-bar');
+const allBookCards = document.querySelectorAll('.book-card');
+
+searchBar.addEventListener('input', () => {
+    const searchTerm = searchBar.value.toLowerCase();
+    
+    allBookCards.forEach(card => {
+        const title = card.getAttribute('data-title').toLowerCase();
+        if (title.includes(searchTerm)) {
+            card.style.display = ''; // Mostrar o livro
+        } else {
+            card.style.display = 'none'; // Esconder o livro
+        }
+    });
+});
+
+
+        /* Script para navegação entre as seções dos livros */
+        const bookCards = document.querySelectorAll('.book-card');
+const pageButtons = document.querySelectorAll('.page-button');
+
+let currentPage = 1;
+const itemsPerPage = 8; // Quantidade de livros por página
+
+function showPage(page) {
+    const startIndex = (page - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+
+    bookCards.forEach((card, index) => {
+        if (index >= startIndex && index < endIndex) {
+            card.style.display = ''; // Mostrar livro
+        } else {
+            card.style.display = 'none'; // Esconder livro
+        }
+    });
+}
+
+pageButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        currentPage = parseInt(button.getAttribute('data-page'));
+        showPage(currentPage);
+        updatePaginationButtons();
+    });
+});
+
+function updatePaginationButtons() {
+    pageButtons.forEach(button => {
+        button.style.fontWeight = button.getAttribute('data-page') == currentPage ? 'bold' : 'normal';
+    });
+}
+
+// Mostrar a primeira página ao carregar
+showPage(currentPage);
+updatePaginationButtons();
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,173 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: rgb(255, 255, 255);
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.header {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Centraliza os elementos no header */
+  width: 100%;
+  height: 115px;
+  background: rgba(0, 110, 173, 1);
+  position: fixed; /* Para posicionar o botão */
+  border-bottom: 1px solid black;
+  z-index: 100;
+}
+
+.header-title {
+  color: white;
+  font-weight: 600;
+  font-size: 32px;
+  margin: 0 20px;
+}
+
+.icon {
+  width: 149px;
+  height: 108px;
+  background: url("../images/book.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  margin-right: 10px; /* Ajuste a margem para o espaçamento desejado */
+}
+
+.sidebar {
+  width: 250px;
+  height: calc(100vh - 115px); /* Altura total da janela menos a altura do header */
+  background: rgba(0, 110, 173, 1);
+  position: fixed; 
+  top: 115px; /* Fica logo abaixo do header */
+  left: 0; 
+  border-top: 0px solid black
+}
+
+.sidebar-content {
+  padding: 20px;
+  color: white;
+}
+
+.sidebar ul {
+  font-family: Sarala;
+  font-size: 23px;
+  list-style-type: none;
+  flex-direction: column;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  
+}
+
+.sidebar a {
+  color: rgb(0, 0, 0);
+  text-decoration: none;
+}
+
+.search-container {
+  position: relative;
+  width: 350px; /* Espaçamento entre o header e a barra de busca */
+  margin-top: 135px;
+}
+
+.search-bar {
+  width: 100%; /* Use 100% para ocupar a largura do container */
+  max-width: 400px; /* Defina uma largura máxima se necessário */
+  padding-left: 40px; /* Espaço à esquerda para o ícone */
+  padding-right: 40px; /* Espaço à direita para o botão de busca */
+  border-radius: 20px; /* Borda arredondada */
+  border: 1px solid #ccc; /* Borda do campo */
+  height: 40px; /* Defina uma altura fixa para o campo */
+}
+
+.filter-icon {
+  position: absolute;
+  left: 10px; /* Ajuste conforme necessário */
+  top: 50%; /* Centraliza verticalmente */
+  transform: translateY(-50%); /* Corrige a centralização */
+  width: 20px; /* Ajuste o tamanho conforme necessário */
+  height: auto;
+  opacity: 0.5;
+}
+
+.search-button {
+  position: absolute;
+  right: 10px; /* Ajuste conforme necessário */
+  top: 50%; /* Centraliza verticalmente */
+  transform: translateY(-50%); /* Corrige a centralização */
+  background: none; /* Remover fundo */
+  border: none; /* Remover borda */
+  cursor: pointer; /* Cursor de pointer */
+}
+
+.discover-title {
+  margin-top: 30px;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.book-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; /* Centraliza os cards */
+  margin-top: 20px;
+  gap: 95px; /* Espaçamento entre os cards */
+  width: calc(100% - 300px); /* Ajusta a largura da área dos livros */
+  margin-left: 250px; /* Adiciona margem para que os livros não fiquem em cima da sidebar */
+}
+
+.book-card {
+  width: 200px; /* Ajuste conforme necessário */
+  background: rgb(226, 225, 225);
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(10, 106, 208, 0.1);
+  text-align: center;
+  padding: 10px;
+  cursor: pointer;
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+
+.book-image {
+  width: 100%;
+  height: auto; /* Mantém a proporção da imagem */
+  border-radius: 10px;
+}
+
+.book-title {
+  font-size: 14px;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.page-button {
+  padding: 10px 15px;
+  margin: 0 5px;
+  cursor: pointer;
+  border: 0.1em solid black;
+  background-color: #ffffff;
+  border-radius: 30px;
+  transition: background-color 0.3s;
+}
+
+.page-button:hover {
+  background-color: #e0e0e0;
+}
