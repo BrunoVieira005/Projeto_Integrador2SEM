@@ -1,7 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import Register from '../views/Register.vue'
+import Register from '../views/Register.vue';
 import Login from '../views/Login.vue'; 
 import Dashboard from '../views/Dashboard.vue'; 
+import Details from '@/views/Details.vue'; // Importando a nova página de detalhes
 
 const routes = [
   {
@@ -18,6 +19,13 @@ const routes = [
     path: '/dashboard',
     name: 'Dashboard',
     component: Dashboard,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: '/livro/:id', // Rota para detalhes do livro, com ID como parâmetro
+    name: 'Details',
+    component: Details,
+    props: true,
     meta: { requiresAuth: true },
   },
   {

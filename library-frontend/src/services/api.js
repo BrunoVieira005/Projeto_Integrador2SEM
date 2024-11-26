@@ -13,7 +13,7 @@ export default {
     getBooks() {
         return apiClient.get('/books'); // GET para listar livros
     },
-    
+
     // Função para adicionar um livro com imagem (usa FormData)
     addBook(bookFormData) { 
         return apiClient.post('/books', bookFormData, {
@@ -32,7 +32,13 @@ export default {
         });
     },
 
+    // Função para excluir livro pelo ID
     deleteBook(id) {
-        return apiClient.delete(`/books/${id}`); // DELETE para excluir livro pelo ID
+        return apiClient.delete(`/books/${id}`); // DELETE para excluir livro
     },
+
+    // Função para buscar um livro pelo ID
+    getBookById(bookId) {
+        return apiClient.get(`/books/${bookId}`); // GET para obter um livro específico pelo ID
+    }
 };

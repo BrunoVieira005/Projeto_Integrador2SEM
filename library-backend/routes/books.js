@@ -44,6 +44,19 @@ router.get('/', async (req, res) => {
     }
 });
 
+// *** LEITURA (GET) POR ID ***
+router.get('/:id', async (req, res) => {
+    try {
+        const book = await Book.findById(req.params.id); // Busca o livro pelo ID
+        if (!book) {
+            return res.status(404).json({ message: 'Livro não encontrado' }); // Retorna erro 404 se não encontrar o livro
+        }
+        res.status(200).json(book); // Retorna o livro encontrado
+    } catch (error) {
+        res.status(500).json({ message: 'Erro ao buscar livro', error });
+    }
+});
+
 // *** ATUALIZAÇÃO (PUT) ***
 router.put('/:id', upload.single('image'), async (req, res) => {
     const { title, author, year } = req.body; // Extraindo os dados da requisição
