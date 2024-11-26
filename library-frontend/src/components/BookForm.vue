@@ -1,4 +1,5 @@
 <template>
+  <!-- Formulário de Adição/Atualização de Livro -->
   <form @submit.prevent="handleSubmit">
     <input v-model="book.title" placeholder="Título" required />
     <input v-model="book.author" placeholder="Autor" required />
@@ -42,57 +43,139 @@ export default {
   methods: {
     // Função para enviar o formulário
     handleSubmit() {
-  const formData = new FormData(); // Crie um FormData
-  formData.append('title', this.book.title); // Adiciona os dados do livro
-  formData.append('author', this.book.author);
-  formData.append('year', this.book.year);
-  
-  if (this.book.image) {
-    formData.append('image', this.book.image); // Envia o arquivo de imagem
-  }
+      const formData = new FormData(); // Crie um FormData
+      formData.append('title', this.book.title); // Adiciona os dados do livro
+      formData.append('author', this.book.author);
+      formData.append('year', this.book.year);
+      
+      if (this.book.image) {
+        formData.append('image', this.book.image); // Envia o arquivo de imagem
+      }
 
-  // Verifique se é para atualizar ou criar um novo livro
-  if (this.book._id) {
-    api.updateBook(this.book._id, formData).then(() => {
-      this.$emit('book-updated'); // Emite um evento quando o livro é atualizado
-    }).catch(error => {
-      console.error("Erro ao atualizar livro:", error);
-    });
-  } else {
-    api.addBook(formData).then(() => {
-      this.$emit('book-added'); // Emite um evento quando um novo livro é adicionado
-    }).catch(error => {
-      console.error("Erro ao adicionar livro:", error);
-    });
-  }
-},
-handleImageUpload(event) {
-  const file = event.target.files[0]; // Obtém o arquivo de imagem
-  if (file && file.type.startsWith('image/')) { // Verifica se é uma imagem
-    this.book.image = file; // Armazena o arquivo de imagem no objeto book
-    this.imagePreview = URL.createObjectURL(file); // Cria um URL temporário para a imagem
-  } else {
-    alert('Por favor, selecione uma imagem válida.');
-  }
-}
+      // Verifique se é para atualizar ou criar um novo livro
+      if (this.book._id) {
+        api.updateBook(this.book._id, formData).then(() => {
+          this.$emit('book-updated'); // Emite um evento quando o livro é atualizado
+          this.resetForm(); // Reseta o formulário após a atualização
+        }).catch(error => {
+          console.error("Erro ao atualizar livro:", error);
+        });
+      } else {
+        api.addBook(formData).then(() => {
+          this.$emit('book-added'); // Emite um evento quando um novo livro é adicionado
+          this.resetForm(); // Reseta o formulário após adicionar o livro
+        }).catch(error => {
+          console.error("Erro ao adicionar livro:", error);
+        });
+      }
+    },
+    
+    // Função para resetar o formulário
+    resetForm() {
+      this.book = { title: '', author: '', year: null }; // Limpa os campos de texto
+      this.imagePreview = null; // Limpa a visualização da imagem
+      this.$refs.bookImageInput.value = ''; // Limpa o campo de arquivo de imagem
+    },
+
+    handleImageUpload(event) {
+      const file = event.target.files[0]; // Obtém o arquivo de imagem
+      if (file && file.type.startsWith('image/')) { // Verifica se é uma imagem
+        this.book.image = file; // Armazena o arquivo de imagem no objeto book
+        this.imagePreview = URL.createObjectURL(file); // Cria um URL temporário para a imagem
+      } else {
+        alert('Por favor, selecione uma imagem válida.');
+      }
+    }
   },
 };
 </script>
 
 <style scoped>
-/* Estilos para o campo de upload e a visualização da imagem */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: #f4f7fc;
+  padding: 20px;
+}
+
+/* Formulário */
+form {
+  margin: 50px auto;
+  padding: 20px;
+  background-color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  width: 50%;
+  max-width: 500px;
+}
+
+input {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  background-color: #f9f9f9;
+}
+
+input:focus {
+  border-color: #006ead;
+  outline: none;
+}
+
 .image-upload {
   margin-bottom: 20px;
 }
 
+label {
+  display: block;
+  font-size: 16px;
+  color: #555;
+  margin-bottom: 8px;
+}
+
+input[type="file"] {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  background-color: #f9f9f9;
+}
+
 .image-preview {
-  margin-top: 20px;
+  margin-top: 15px;
   text-align: center;
 }
 
 .uploaded-image {
-  max-width: 100%;
-  height: auto;
+  max-width: 200px;
   border-radius: 10px;
+  margin-top: 10px;
+}
+
+button {
+  background-color: #006ead;
+  color: white;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  width: 100%;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #004f8d;
+}
+
+button:focus {
+  outline: none;
 }
 </style>

@@ -2,12 +2,12 @@
   <div class="container">
     <div class="header">
       <div class="icon"></div>
-      <h1 class="header-title">Login</h1>
+      <h1 class="header-title">Mange Book</h1>
     </div>
     <div class="blue-background"></div>
 
     <div class="login-box">
-      <h2 class="login-box-title">Login</h2>
+      <h2 class="login-box-title">Entre ou cadastre-se</h2>
       <form @submit.prevent="loginUser">
         <div class="input-field-one">
           <input v-model="username" type="text" required placeholder="Usuário" />
@@ -18,26 +18,23 @@
 
         <div class="remember-me">
           <input type="checkbox" id="remember" />
-          <label for="remember">Lembrar-me</label>
+          <label for="remember">Lembrar de mim</label>
         </div>
 
         <button class="button-login" type="submit">
-          <span class="button-login-text">Entrar</span>
+          <span class="button-login-text">Login</span>
         </button>
 
-        <p class="forgot-password">
-          <a href="#">Esqueceu a senha?</a>
-        </p>
       </form>
 
-      <p v-if="message" class="register-link">
-        Não tem uma conta? 
-        <a href="/register" class="register-link-text">Registre-se aqui</a>
+      <p class="register-link">
+        Ainda não possui uma conta? 
+        <a href="/register" class="register-link-text">Cadastre-se</a>
       </p>
     </div>
 
     <div class="welcome-message">
-      Bem-vindo de volta!
+      Seja bem vindo ao <b>Mange Book!</b>
     </div>
   </div>
 </template>
@@ -88,21 +85,30 @@ export default {
     background: rgb(255, 255, 255);
     position: relative;
     overflow: hidden;
+    font-family: sans-serif;
+    display: flex;
+    justify-content: center;
+    align-content: center;
   }
 
   .header {
+    margin: 0;
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
     width: 100%;
     height: 115px;
     background: rgba(0, 110, 173, 1);
+    position: fixed;
+    top: 0;
+    border-bottom: 1px solid black;
+    z-index: 100;
   }
 
   .header-title {
     color: rgba(255, 255, 255, 1);
     text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    font-family: Inter, sans-serif;
+    font-family: sans-serif;
     font-weight: 600;
     font-size: 32px;
     margin: 0 20px;
@@ -122,7 +128,7 @@ export default {
     width: 100%;
     height: 275px;
     background: rgba(0, 110, 173, 1);
-    position: absolute;
+    position: fixed;
     top: 232px;
     left: 0;
   }
@@ -145,11 +151,9 @@ export default {
   .login-box-title {
     width: 257px;
     color: rgba(0, 0, 0, 1);
-    font-family: Sarala;
-    font-weight: Regular;
-    font-size: 24px;
+    font-size: 25px;
+    margin-bottom: 100px;
     text-align: left;
-    margin-bottom: 20px;
   }
 
   .input-field-one, .input-field-two {
@@ -178,8 +182,6 @@ export default {
   .label-email, .label-password {
     width: 38px;
     color: rgba(0, 0, 0, 1);
-    font-family: Sarala;
-    font-weight: Regular;
     font-size: 11px;
     text-align: left;
   }
@@ -189,8 +191,6 @@ export default {
     align-items: center;
     width: 94px;
     color: rgba(0, 0, 0, 1);
-    font-family: Sarala;
-    font-weight: Regular;
     font-size: 10px;
     text-align: left;
   }
@@ -213,28 +213,18 @@ export default {
   }
 
   .button-login-text {
-    width: 37px;
+    width: 40px;
     color: rgba(255, 255, 255, 1);
-    font-family: Sarala;
     font-weight: Bold;
-    font-size: 13px;
+    font-size: 15px;
     text-align: center;
   }
 
-  .forgot-password {
-    width: 110px;
-    color: rgba(0, 0, 0, 1);
-    font-family: Sarala;
-    font-weight: Bold;
-    font-size: 10px;
-    text-align: left;
-    margin-top: 15px;
-  }
-
   .register-link {
-    width: 227px;
-    font-size: 12px;
-    text-align: left;
+    width: 250px;
+    font-size: 13px;
+    text-align: center;
+    margin-top: 100px;
   }
 
   .register-link-text {

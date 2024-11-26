@@ -7,7 +7,7 @@
     <div class="blue-background"></div>
 
     <div class="register-box">
-      <h2 class="register-box-title">Cadastro</h2>
+      <h2 class="register-box-title">Cadastre-se</h2>
       <form @submit.prevent="registerUser">
         <div class="input-field-one">
           <input v-model="username" type="text" required placeholder="Usuário" />
@@ -20,8 +20,9 @@
           <span class="button-register-text">Cadastrar-se</span>
         </button>
 
-        <div class="register-link">
-          <a href="/login" class="register-link-text">Já tem uma conta? Faça login</a>
+        <div class="login-link">
+          Já tem uma conta?
+          <a href="/login" class="login-link-text"> <b>Faça login</b></a>
         </div>
       </form>
     </div>
@@ -70,11 +71,6 @@ export default {
     box-sizing: border-box;
   }
 
-  body {
-    font-size: 14px;
-    font-family: Sarala;
-  }
-
   .container {
     margin: auto;
     width: 100%;
@@ -82,21 +78,29 @@ export default {
     background: rgb(255, 255, 255);
     position: relative;
     overflow: hidden;
+    font-family: sans-serif;
+    display: flex;
+    justify-content: center;
+    align-content: center;
   }
 
   .header {
+    margin: 0;
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
     width: 100%;
     height: 115px;
     background: rgba(0, 110, 173, 1);
+    position: fixed;
+    top: 0;
+    border-bottom: 1px solid black;
+    z-index: 100;
   }
 
   .header-title {
     color: rgba(255, 255, 255, 1);
     text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    font-family: Inter, sans-serif;
     font-weight: 600;
     font-size: 32px;
     margin: 0 20px;
@@ -116,14 +120,14 @@ export default {
     width: 100%;
     height: 275px;
     background: rgba(0, 110, 173, 1);
-    position: absolute;
+    position: fixed;
     top: 232px;
     left: 0;
   }
 
   .register-box {
     width: 317px;
-    height: 500px;
+    height: 455px;
     background: rgb(247, 245, 245);
     position: absolute;
     display: flex;
@@ -139,11 +143,9 @@ export default {
   .register-box-title {
     width: 257px;
     color: rgba(0, 0, 0, 1);
-    font-family: Sarala;
-    font-weight: Regular;
-    font-size: 24px;
+    font-size: 25px;
+    margin-bottom: 100px;
     text-align: left;
-    margin-bottom: 20px;
   }
 
   .input-field-one, .input-field-two {
@@ -172,8 +174,6 @@ export default {
   .label-email, .label-password {
     width: 38px;
     color: rgba(0, 0, 0, 1);
-    font-family: Sarala;
-    font-weight: Regular;
     font-size: 11px;
     text-align: left;
   }
@@ -194,24 +194,22 @@ export default {
   .button-register-text {
     width: 100px;
     color: rgba(255, 255, 255, 1);
-    font-family: Sarala;
     font-weight: Bold;
     font-size: 15px;
     text-align: center;
   }
 
-  .register-link {
-    width: 257px;
-    font-size: 16px;
+  .login-link {
+    width: 250px;
+    font-size: 13px;
     text-align: center;
     margin-top: 100px;
   }
 
-  .register-link-text {
-    color: rgb(255, 255, 255);
+  .login-link-text {
+    color: rgba(0, 110, 173, 1);
     text-decoration: none;
     font-weight: bold;
-    color: black;
   }
 
   .welcome-message {

@@ -8,8 +8,8 @@ const app = express(); // Inicializa uma aplicação Express
 const authRoutes = require('./routes/authRoutes'); // Importa as rotas de autenticação
 
 app.use(cors({
-    origin: 'http://localhost:8080', // Permite requisições apenas do seu frontend
-    methods: ['GET', 'POST'], // Adicione outros métodos se necessário
+    origin: ['http://localhost:8080', 'http://localhost:8081'], // Permitir ambos os frontends
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
 }));
 
 app.use(express.json()); // Middleware para processar requisições JSON

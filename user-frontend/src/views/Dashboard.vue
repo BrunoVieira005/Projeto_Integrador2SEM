@@ -2,7 +2,7 @@
   <div class="container">
     <div class="header">
       <div class="icon"></div>
-      <span class="header-title">Manage Book</span>
+      <span class="header-title">Mange Book</span>
     </div>
 
     <aside class="sidebar" id="sidebar">
@@ -36,9 +36,15 @@
         :key="book._id"
         :data-title="book.title"
       >
-        <a :href="`../livro/livro.html?id=${book._id}`">
-          <img :src="`http://localhost:3000${book.imageUrl}`" alt="Imagem do Livro" v-if="book.imageUrl" class="book-image" />
-        </a>
+        <!-- Link para a página de detalhes do livro -->
+        <router-link :to="`/livro/${book._id}`">
+          <img
+            :src="`http://localhost:3000${book.imageUrl}`"
+            alt="Imagem do Livro"
+            v-if="book.imageUrl"
+            class="book-image"
+          />
+        </router-link>
         <span class="book-title">{{ book.title }}</span>
       </div>
     </div>
@@ -93,14 +99,16 @@ export default {
 </script>
 
 <style scoped>
+
 * {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+  overflow: hidden;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 body {
-  font-family: 'Inter', sans-serif;
+  font-family: sans-serif;
   background: rgb(255, 255, 255);
 }
 
@@ -111,26 +119,37 @@ body {
 }
 
 .header {
-  margin: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 115px;
-  background: rgba(0, 110, 173, 1);
-  position: fixed;
-  top: 0;
-  border-bottom: 1px solid black;
-  z-index: 100;
-}
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 115px;
+    background: rgba(0, 110, 173, 1);
+    position: fixed;
+    top: 0;
+    border-bottom: 1px solid black;
+    z-index: 100;
+  }
 
-.header-title {
-  color: white;
-  font-weight: 600;
-  font-size: 32px;
-  margin: 0 20px;
-}
+  .header-title {
+    color: rgba(255, 255, 255, 1);
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    font-family: sans-serif;
+    font-weight: 600;
+    font-size: 32px;
+    margin: 0 20px;
+  }
 
+  .icon {
+    width: 149px;
+    height: 108px;
+    background: url("../assets/book.png");
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    margin-left: 10px;
+  }
 .sidebar {
   width: 250px;
   height: calc(100vh - 115px);
@@ -147,7 +166,6 @@ body {
 }
 
 .sidebar ul {
-  font-family: Sarala;
   font-size: 23px;
   list-style-type: none;
   flex-direction: column;
