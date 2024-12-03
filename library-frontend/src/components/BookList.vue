@@ -4,6 +4,7 @@
     <ul>
       <li v-for="book in books" :key="book._id" class="book-item">
         <span class="book-info">{{ book.title }} - {{ book.author }} ({{ book.year }})</span>
+        <p>{{ book.description }}</p>
         <div class="buttons">
           <button @click="editBook(book)" class="edit-button">Editar</button>
           <button @click="deleteBook(book._id)" class="delete-button">Excluir</button>

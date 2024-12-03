@@ -3,6 +3,7 @@ import Register from '../views/Register.vue';
 import Login from '../views/Login.vue'; 
 import Dashboard from '../views/Dashboard.vue'; 
 import Details from '@/views/Details.vue'; // Importando a nova página de detalhes
+import Newest from '@/views/Newest.vue';
 
 const routes = [
   {
@@ -19,6 +20,12 @@ const routes = [
     path: '/dashboard',
     name: 'Dashboard',
     component: Dashboard,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: '/newest',
+    name: 'Newest',
+    component: Newest,
     meta: { requiresAuth: true },
   },
   {

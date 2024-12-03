@@ -28,6 +28,9 @@
   
           <!-- Ano de publicação -->
           <span class="book-year">Ano de publicação: {{ book.year }}</span>
+
+          <!-- Descrição do livro -->
+           <span class= "book-year"> {{ book.description }}</span>
         </div>
       </div>
     </div>
@@ -154,30 +157,14 @@
     margin-top: 10px;
   }
   
-  .purchase-section {
-    margin-top: 30px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
+  .book-description {
+  display: block;
+  font-size: 16px;
+  color: #666;
+  margin-top: 20px;
+  line-height: 1.6;
+  word-wrap: break-word;
   }
-  
-  .price {
-    font-size: 24px;
-    font-weight: bold;
-  }
-  
-  .purchase-button {
-    padding: 10px 20px;
-    background-color: #006ead;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .purchase-button:hover {
-    background-color: #004f8d;
-  }
+
   </style>
   

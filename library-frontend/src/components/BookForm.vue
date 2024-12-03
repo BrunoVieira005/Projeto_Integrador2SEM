@@ -4,6 +4,8 @@
     <input v-model="book.title" placeholder="Título" required />
     <input v-model="book.author" placeholder="Autor" required />
     <input v-model="book.year" placeholder="Ano" required />
+    <input v-model="book.description" placeholder="Descrição do Livro" required />
+
 
     <!-- Campo de upload de imagem -->
     <div class="image-upload">
@@ -28,7 +30,7 @@ export default {
   props: ['bookToEdit'], // Recebe o livro a ser editado como uma prop
   data() {
     return {
-      book: this.bookToEdit || { title: '', author: '', year: null }, // Inicializa o objeto book
+      book: this.bookToEdit || { title: '', author: '', year: null, description: '' }, // Inicializa o objeto book
       imagePreview: null, // Para armazenar o URL da imagem selecionada
     };
   },
@@ -47,6 +49,7 @@ export default {
       formData.append('title', this.book.title); // Adiciona os dados do livro
       formData.append('author', this.book.author);
       formData.append('year', this.book.year);
+      formData.append('description', this.book.description); // Inclui a descrição
       
       if (this.book.image) {
         formData.append('image', this.book.image); // Envia o arquivo de imagem
@@ -72,7 +75,7 @@ export default {
     
     // Função para resetar o formulário
     resetForm() {
-      this.book = { title: '', author: '', year: null }; // Limpa os campos de texto
+      this.book = { title: '', author: '', year: null, description: '' }; // Limpa os campos de texto
       this.imagePreview = null; // Limpa a visualização da imagem
       this.$refs.bookImageInput.value = ''; // Limpa o campo de arquivo de imagem
     },
