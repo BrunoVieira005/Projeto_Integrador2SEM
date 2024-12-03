@@ -5,7 +5,9 @@ const BookSchema = new mongoose.Schema({
     title: { type: String, required: true },
     author: { type: String, required: true },
     year: { type: Number },
-    imageUrl: { type: String }  // Adiciona o campo imageUrl para armazenar a URL da imagem
+    imageUrl: { type: String }, // URL da imagem
+    description: { type: String },
+    dateAdded: { type: Date, default: Date.now}
 });
 
 // Exportando o modelo
