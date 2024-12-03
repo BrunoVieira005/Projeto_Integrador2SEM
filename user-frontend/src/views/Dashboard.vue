@@ -8,8 +8,8 @@
     <aside class="sidebar" id="sidebar">
       <div class="sidebar-content">
         <ul class="sidebar-list">
-          <li><a href="#">Em destaque</a></li>
-          <li><a href="#">Novos</a></li>
+          <li><a href="/dashboard">Página Inicial</a></li>
+          <li><a href="/newest">Novos</a></li>
         </ul>
       </div>
     </aside>
@@ -22,7 +22,6 @@
         class="search-bar"
         placeholder="Buscar..."
       />
-      <img src="../assets/filter.svg" alt="Filtro" class="filter-icon" />
       <button class="search-button">🔍</button>
     </div>
 
@@ -35,6 +34,7 @@
         v-for="book in filteredBooks"
         :key="book._id"
         :data-title="book.title"
+        :data-author="book.author"
       >
         <!-- Link para a página de detalhes do livro -->
         <router-link :to="`/livro/${book._id}`">
@@ -46,6 +46,7 @@
           />
         </router-link>
         <span class="book-title">{{ book.title }}</span>
+        <span class="book-author">Por: {{ book.author }}</span>
       </div>
     </div>
 
@@ -72,6 +73,7 @@ export default {
       try {
         const response = await api.getBooks(); // Busca todos os livros
         this.books = response.data;
+        this.books.sort(() => Math.random() - 0.5);
         this.filteredBooks = this.books; // Inicializa com todos os livros
       } catch (error) {
         console.error('Erro ao buscar livros:', error);
@@ -105,20 +107,21 @@ export default {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-}
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  }
 
-body {
+  body {
   font-family: sans-serif;
   background: rgb(255, 255, 255);
-}
+  }
 
-.container {
+  .container {
   display: flex;
   flex-direction: column;
   align-items: center;
-}
+  }
 
-.header {
+  .header {
     margin: 0;
     display: flex;
     align-items: center;
@@ -150,124 +153,119 @@ body {
     background-size: cover;
     margin-left: 10px;
   }
-.sidebar {
-  width: 250px;
-  height: calc(100vh - 115px);
-  background: rgba(0, 110, 173, 1);
-  position: fixed;
-  top: 115px;
-  left: 0;
-  border-top: 0px solid black;
-}
+  .sidebar {
+    width: 250px;
+    height: calc(100vh - 115px);
+    background: rgba(0, 110, 173, 1);
+    position: fixed;
+    top: 115px;
+    left: 0;
+    border-top: 0px solid black;
+  }
 
-.sidebar-content {
-  padding: 20px;
-  color: white;
-}
+  .sidebar-content {
+    padding: 20px;
+    color: white;
+  }
 
-.sidebar ul {
-  font-size: 23px;
-  list-style-type: none;
-  flex-direction: column;
-  display: flex;
-  align-items: center;
-  gap: 18px;
-}
+  .sidebar ul {
+    font-size: 19px;
+    list-style-type: none;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+  }
 
-.sidebar a {
-  color: rgb(0, 0, 0);
-  text-decoration: none;
-}
+  .sidebar a {
+    color: rgb(0, 0, 0);
+    text-decoration: none;
+  }
 
-.search-container {
-  position: relative;
-  width: 350px;
-  margin-top: 135px;
-}
+  .search-container {
+    position: relative;
+    width: 350px;
+    margin-top: 135px;
+    }
 
-.search-bar {
-  width: 100%;
-  max-width: 400px;
-  padding-left: 40px;
-  padding-right: 40px;
-  border-radius: 20px;
-  border: 1px solid #ccc;
-  height: 40px;
-}
+  .search-bar {
+    width: 100%;
+    max-width: 400px;
+    padding-left: 40px;
+    padding-right: 40px;
+    border-radius: 20px;
+    border: 1px solid #ccc;
+    height: 40px;
+    font-size: 17px;
+  }
 
-.filter-icon {
-  position: absolute;
-  left: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 20px;
-  height: auto;
-  opacity: 0.5;
-}
+  .search-button {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
 
-.search-button {
-  position: absolute;
-  right: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-  background: none;
-  border: none;
-  cursor: pointer;
-}
+  .discover-title {
+    margin-top: 30px;
+    font-size: 24px;
+    font-weight: bold;
+  }
 
-.discover-title {
-  margin-top: 30px;
-  font-size: 24px;
-  font-weight: bold;
-}
+  .book-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 20px;
+    gap: 95px;
+    width: calc(100% - 300px);
+    margin-left: 250px;
+  }
 
-.book-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin-top: 20px;
-  gap: 95px;
-  width: calc(100% - 300px);
-  margin-left: 250px;
-}
+  .book-card {
+    width: 200px;
+    background: rgb(226, 225, 225);
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(10, 106, 208, 0.1);
+    text-align: center;
+    padding: 10px;
+    cursor: pointer;
+    transition: box-shadow 0.3s ease-in-out;
+  }
 
-.book-card {
-  width: 200px;
-  background: rgb(226, 225, 225);
-  border-radius: 10px;
-  box-shadow: 0 2px 5px rgba(10, 106, 208, 0.1);
-  text-align: center;
-  padding: 10px;
-  cursor: pointer;
-  transition: box-shadow 0.3s ease-in-out;
-}
+  .book-image {
+    width: 100%;
+    height: 200px;
+    border-radius: 10px;
+  }
 
-.book-image {
-  width: 100%;
-  height: auto;
-  border-radius: 10px;
-}
+  .book-title, .book-author {
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 17px;
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+  }
 
-.book-title {
-  font-size: 14px;
-  font-weight: bold;
-  margin-top: 10px;
-}
 
-.add-book-button {
-  margin-top: 20px;
-}
+  .add-book-button {
+    margin-top: 20px;
+  }
 
-.add-book-button button {
-  padding: 10px 20px;
-  background-color: #006ead;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
+  .add-book-button button {
+    padding: 10px 20px;
+    background-color: #006ead;
+    font-size: 18px;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
 
-.add-book-button button:hover {
-  background-color: #004f8d;
-}
+  .add-book-button button:hover {
+    background-color: #004f8d;
+  }
 </style>
