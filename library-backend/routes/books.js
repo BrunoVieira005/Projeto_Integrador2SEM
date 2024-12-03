@@ -20,13 +20,13 @@ const upload = multer({ storage: storage }); // Middleware do Multer
 
 // *** CRIAÇÃO (POST) ***
 router.post('/', upload.single('image'), async (req, res) => {
-    const { title, author, year } = req.body; // Extrai os dados da requisição
+    const { title, author, year, description } = req.body; // Extrai os dados da requisição
     
     // Aqui estamos assumindo que o campo de imagem seja passado como 'image'
     const imageUrl = req.file ? `/uploads/${req.file.filename}` : null; // Salva a URL da imagem
 
     try {
-        const newBook = new Book({ title, author, year, imageUrl }); // Adiciona a URL da imagem
+        const newBook = new Book({ title, author, year, imageUrl, description }); // Adiciona a URL da imagem
         await newBook.save();
         res.status(201).json(newBook); // Retorna o livro criado com a imagem
     } catch (error) {
@@ -59,12 +59,12 @@ router.get('/:id', async (req, res) => {
 
 // *** ATUALIZAÇÃO (PUT) ***
 router.put('/:id', upload.single('image'), async (req, res) => {
-    const { title, author, year } = req.body; // Extraindo os dados da requisição
+    const { title, author, year, description } = req.body; // Extraindo os dados da requisição
     const imageUrl = req.file ? `/uploads/${req.file.filename}` : null; // Salva o caminho da imagem
 
     try {
         const updatedBook = await Book.findByIdAndUpdate(req.params.id, 
-            { title, author, year, imageUrl }, 
+            { title, author, year, imageUrl, description }, 
             { new: true } // Para retornar o documento atualizado
         );
         res.status(200).json(updatedBook); // Retorna o livro atualizado com a imagem
