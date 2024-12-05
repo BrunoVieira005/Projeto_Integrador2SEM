@@ -2,6 +2,7 @@ const express = require('express');
 const multer = require('multer');
 const path = require('path');
 const Book = require('../models/Book');
+const authenticate = require('../../auth-api/middleware/authenticate'); // Importe o middleware de autenticação
 const router = express.Router();
 
 // Configuração do Multer para gerenciar o upload de imagens
@@ -81,6 +82,96 @@ router.delete('/:id', async (req, res) => {
     } catch (error) {
         res.status(500).json({ message: 'Erro ao deletar livro', error });
     }
+});
+
+// *** Reservar um Livro ***
+router.post('/:id/reserve', authenticate, async (req, res) => {
+  const bookId = req.params.id;
+  const userId = req.user.id; // O ID do usuário autenticado
+
+  try {
+    const book = await Book.findById(bookId);
+    if (!book) {
+      return res.status(404).json({ message: 'Livro não encontrado' });
+    }
+
+    if (book.reserved) {
+      return res.status(400).json({ message: 'Este livro já está reservado' });
+    }
+
+    // Marca o livro como reservado e associa o usuário
+    book.reserved = true;
+    book.reservedBy = userId;
+    await book.save();
+
+    res.status(200).json({ message: 'Livro reservado com sucesso!', book });
+  } catch (error) {
+    res.status(500).json({ message: 'Erro ao reservar livro', error });
+  }
+});
+
+// *** Cancelar Reserva de um Livro ***
+router.post('/:id/cancel', authenticate, async (req, res) => {
+  const bookId = req.params.id;
+  const userId = req.user.id; // O ID do usuário autenticado
+
+  try {
+    const book = await Book.findById(bookId);
+    if (!book) {
+      return res.status(404).json({ message: 'Livro não encontrado' });
+    }
+
+    if (!book.reserved || book.reservedBy.toString() !== userId.toString()) {
+      return res.status(400).json({ message: 'Este livro não está reservado por você' });
+    }
+
+    // Cancela a reserva e remove o usuário
+    book.reserved = false;
+    book.reservedBy = null;
+    await book.save();
+
+    res.status(200).json({ message: 'Reserva cancelada com sucesso!', book });
+  } catch (error) {
+    res.status(500).json({ message: 'Erro ao cancelar reserva', error });
+  }
+});
+
+// *** Avaliar um Livro ***
+router.post('/:id/rate', authenticate, async (req, res) => {
+  const bookId = req.params.id;
+  const userId = req.user.id; // O ID do usuário autenticado
+  const { rating } = req.body; // Avaliação do livro
+
+  if (rating < 1 || rating > 5) {
+    return res.status(400).json({ message: 'Avaliação inválida. A avaliação deve ser entre 1 e 5.' });
+  }
+
+  try {
+    const book = await Book.findById(bookId);
+    if (!book) {
+      return res.status(404).json({ message: 'Livro não encontrado' });
+    }
+
+    // Verifica se o usuário já avaliou o livro
+    const existingRating = book.ratings.find(r => r.userId.toString() === userId.toString());
+    if (existingRating) {
+      return res.status(400).json({ message: 'Você já avaliou este livro.' });
+    }
+
+    // Adiciona a nova avaliação
+    book.ratings.push({ userId, rating });
+
+    // Atualiza a média de avaliações
+    const totalRating = book.rating * book.ratingsCount + rating; // Soma a nova avaliação ao total
+    book.ratingsCount += 1; // Incrementa o número de avaliações
+    book.rating = totalRating / book.ratingsCount; // Calcula a média de avaliações
+
+    await book.save();
+
+    res.status(200).json({ message: 'Avaliação registrada com sucesso!', book });
+  } catch (error) {
+    res.status(500).json({ message: 'Erro ao registrar avaliação', error });
+  }
 });
 
 module.exports = router;

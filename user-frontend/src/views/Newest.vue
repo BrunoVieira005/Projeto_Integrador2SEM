@@ -14,7 +14,7 @@
         </div>
       </aside>
   
-      <!-- Título para a seção "Novos Livros" -->
+      <!-- Título para a seção dos novos livros -->
       <h2 class="discover-title">Livros recém adicionados na plataforma :DD</h2>
   
       <!-- Contêiner de livros -->
@@ -40,7 +40,7 @@
             />
           </router-link>
           <span class="book-title">{{ book.title }}</span>
-          <span class="book-author">Por: {{ book.author }}</span>
+          <span class="book-author">{{ book.author }}</span>
         </div>
       </div>
     </div>
@@ -64,7 +64,7 @@
           this.books = response.data || [];
           // Ordena os livros por data de adição e pega os 5 mais recentes
           this.filteredBooks = this.books
-            .sort((a, b) => new Date(b.dateAdded) - new Date(a.dateAdded)) // Ordena pelos campos dateAdded
+            .sort((a, b) => new Date(a.dateAdded) - new Date(b.dateAdded)) // Ordena pelos campos dateAdded
             .slice(0, 5); // Pega os 5 mais recentes
   
         } catch (error) {
@@ -82,6 +82,7 @@
   
   <style scoped>
   * {
+    overflow: hidden;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -113,21 +114,22 @@
   }
   
   .header-title {
-    color: rgba(255, 255, 255, 1);
-    font-family: sans-serif;
-    font-weight: 600;
-    font-size: 32px;
-    margin: 0 20px;
+  color: rgba(255, 255, 255, 1);
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  font-family: sans-serif;
+  font-weight: 600;
+  font-size: 32px;
+  margin: 0 20px;
   }
-  
+
   .icon {
-    width: 149px;
-    height: 108px;
-    background: url("../assets/book.png");
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: cover;
-    margin-left: 10px;
+  width: 149px;
+  height: 108px;
+  background: url("../assets/book.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  margin-left: 10px;
   }
   
   .sidebar {
@@ -167,44 +169,53 @@
   }
   
   .book-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    margin-top: 20px;
-    gap: 40px;
-    width: calc(100% - 300px);
-    margin-left: 250px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 20px;
+  gap: 80px;
+  width: calc(100% - 300px);
+  margin-left: 250px;
   }
-  
+
   .book-card {
-    width: 200px;
-    background: rgb(226, 225, 225);
-    border-radius: 10px;
-    box-shadow: 0 2px 5px rgba(10, 106, 208, 0.1);
-    text-align: center;
-    padding: 15px;
-    cursor: pointer;
-    transition: box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out;
+  width: 220px;
+  background: rgb(226, 225, 225);
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  padding: 10px;
+  cursor: pointer;
+  transition: box-shadow 0.5s ease-in-out;
   }
-  
+
   .book-card:hover {
-    box-shadow: 0 4px 10px rgba(10, 106, 208, 0.3);
-    transform: translateY(-5px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    transform: translateY(-2px);
   }
+
   
   .book-image {
-    width: 100%;
-    height: 200px;
-    border-radius: 10px;
+  width: 80%;
+  height: 200px;
+  border-radius: 10px;
   }
   
-  .book-title,
+  .book-title {
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 17px;
+  margin-top: 10px;
+  font-weight: 600;
+  display: flex;
+  justify-content: center;
+  }
+
   .book-author {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    font-size: 17px;
-    margin-top: 10px;
-    display: flex;
-    justify-content: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 15px;
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
   }
   
   .loading-message {

@@ -1,4 +1,4 @@
-import axios from 'axios'; // Importa axios para requisições HTTP
+import axios from 'axios';
 
 // Cria instância do Axios com URL para base da API
 const apiClient = axios.create({
@@ -8,37 +8,56 @@ const apiClient = axios.create({
     },
 });
 
-// Exporta funções CRUD usando Axios
+// Função para configurar o cabeçalho de Authorization com o token
+const setAuthHeader = () => {
+    const token = localStorage.getItem('token'); // Pega o token do localStorage
+    if (token) {
+        apiClient.defaults.headers['Authorization'] = `Bearer ${token}`; // Adiciona ao cabeçalho Authorization
+    }
+};
+
+// Faz uma requisição para obter os livros
 export default {
     getBooks() {
+        setAuthHeader(); // Chama a função para garantir que o token esteja no cabeçalho
         return apiClient.get('/books'); // GET para listar livros
     },
 
-    // Função para adicionar um livro com imagem (usa FormData)
-    addBook(bookFormData) { 
+    addBook(bookFormData) {
+        setAuthHeader();
         return apiClient.post('/books', bookFormData, {
             headers: {
-                'Content-Type': 'multipart/form-data', // Especifica o tipo de conteúdo para envio de arquivos
+                'Content-Type': 'multipart/form-data', // Tipo para enviar arquivos
             },
         });
     },
 
-    // Função para atualizar um livro com imagem (usa FormData)
     updateBook(id, bookFormData) {
+        setAuthHeader();
         return apiClient.put(`/books/${id}`, bookFormData, {
             headers: {
-                'Content-Type': 'multipart/form-data', // Especifica o tipo de conteúdo para envio de arquivos
+                'Content-Type': 'multipart/form-data',
             },
         });
     },
 
-    // Função para excluir livro pelo ID
     deleteBook(id) {
-        return apiClient.delete(`/books/${id}`); // DELETE para excluir livro
+        setAuthHeader();
+        return apiClient.delete(`/books/${id}`);
     },
 
-    // Função para buscar um livro pelo ID
     getBookById(bookId) {
-        return apiClient.get(`/books/${bookId}`); // GET para obter um livro específico pelo ID
+        setAuthHeader();
+        return apiClient.get(`/books/${bookId}`);
+    },
+
+    submitRating(bookId, rating) {
+        setAuthHeader(); // Garantir que o token será enviado
+        return apiClient.post(`/books/${bookId}/rate`, { rating });
+    },
+
+    reserveBook(bookId) {
+        setAuthHeader(); // Garantir que o token será enviado
+        return apiClient.post(`/books/${bookId}/reserve`);
     }
 };
