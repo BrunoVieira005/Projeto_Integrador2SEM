@@ -147,7 +147,6 @@ export default {
 }
 
 body {
-  font-family: sans-serif;
   background: rgb(255, 255, 255);
 }
 
@@ -288,13 +287,17 @@ body {
   font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-size: 17px;
   margin-top: 10px;
-  font-weight: 500;
+  font-weight: 600;
+  display: flex;
+  justify-content: center;
 }
 
 .book-author {
-  font-size: 14px;
-  color: rgba(0, 0, 0, 0.6);
-  margin-top: 5px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 15px;
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
 }
 
 .rating {

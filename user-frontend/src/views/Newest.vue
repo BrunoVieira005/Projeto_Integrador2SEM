@@ -15,7 +15,7 @@
       </aside>
   
       <!-- Título para a seção dos novos livros -->
-      <h2 class="discover-title">Livros recém adicionados na plataforma :DD</h2>
+      <h2 class="discover-title">Acompanhe os novos lançamentos do site!</h2>
   
       <!-- Contêiner de livros -->
       <div class="book-container">

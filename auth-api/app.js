@@ -6,7 +6,6 @@ const cors = require("cors"); // Importa o middleware CORS
 
 const app = express(); // Inicializa uma aplicação Express
 const authRoutes = require("./routes/authRoutes"); // Importa as rotas de autenticação
-const authenticate = require("./middleware/authenticate"); // Middleware de autenticação
 
 app.use(
   cors({

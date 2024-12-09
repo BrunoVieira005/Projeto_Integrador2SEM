@@ -13,6 +13,8 @@ const setAuthHeader = () => {
     const token = localStorage.getItem('token'); // Pega o token do localStorage
     if (token) {
         apiClient.defaults.headers['Authorization'] = `Bearer ${token}`; // Adiciona ao cabeçalho Authorization
+    } else {
+        apiClient.defaults.headers['Authorization'] = ''; // Garante que o cabeçalho não fique sujo com valores antigos
     }
 };
 

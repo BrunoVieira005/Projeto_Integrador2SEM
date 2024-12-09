@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 
 // Middleware de autenticação
 const authenticate = (req, res, next) => {
-    const token = req.header('Authorization'); // Pega o token no cabeçalho
+    const token = req.header('Authorization'); // Pega o token no cabeçalhoc
 
     if (!token) {
         return res.status(403).json({ message: 'Token de autenticação não encontrado' });

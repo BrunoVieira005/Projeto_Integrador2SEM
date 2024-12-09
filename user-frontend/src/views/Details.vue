@@ -2,7 +2,7 @@
   <div class="container">
     <div class="header">
       <div class="icon"></div>
-      <span class="header-title">Manage Book</span>
+      <span class="header-title">Mange Book</span>
     </div>
 
     <!-- Conteúdo principal -->
@@ -23,35 +23,35 @@
         <!-- Descrição do livro -->
         <p class="book-description">{{ book.description }}</p>
 
-        <!-- Estrelas de Avaliação -->
-        <div class="star-rating">
-          <span
-            v-for="star in 5"
-            :key="star"
-            class="star"
-            :class="{ filled: star <= (userRating || book.rating) }"
-            @click="handleRating(star)"
-          >★</span>
-        </div>
+         <!-- Estrelas de Avaliação -->
+      <div class="star-rating">
+        <span
+          v-for="star in 5"
+          :key="star"
+          class="star"
+          :class="{ filled: star <= (userRating || book.rating) }"
+          @click="handleRating(star)"
+        >★</span>
+      </div>
 
-        <!-- Mostrar a nota selecionada (opcional) -->
-        <div v-if="userRating !== null">
-          <span class="user-rating">Sua avaliação: {{ userRating }} estrelas</span>
-        </div>
+      <!-- Mostrar a nota selecionada (opcional) -->
+      <div v-if="userRating !== null">
+        <span class="user-rating">Sua avaliação: {{ userRating }} estrelas</span>
+      </div>
 
-        <!-- Disponibilidade -->
-        <div class="availability">
-          <span v-if="book.reserved" class="unavailable">Indisponível</span>
-          <span v-else class="available">Disponível</span>
-        </div>
+      <!-- Disponibilidade -->
+      <div class="availability">
+        <span v-if="book.reserved" class="unavailable">Indisponível</span>
+        <span v-else class="available">Disponível</span>
+      </div>
 
-        <!-- Botão de Reserva -->
-        <div v-if="!book.reserved">
-          <button @click="reserveBook" class="reserve-button">Reservar</button>
-        </div>
+      <!-- Botão de Reserva -->
+      <div v-if="!book.reserved">
+        <button @click="reserveBook" class="reserve-button">Reservar</button>
       </div>
     </div>
   </div>
+</div>
 </template>
 
 <script>
@@ -62,6 +62,7 @@ export default {
     return {
       book: {}, // Detalhes do livro
       userRating: null, // Avaliação do usuário
+      loading: true, // Indicador de carregamento
     };
   },
   methods: {
@@ -75,23 +76,39 @@ export default {
         this.userRating = this.book.ratings.find(rating => rating.userId === this.$store.state.userId)?.rating || null; // Atualiza a avaliação do usuário
       } catch (error) {
         console.error('Erro ao carregar detalhes do livro:', error);
-        
+        alert('Erro ao carregar os detalhes do livro.');
+      } finally {
+        this.loading = false; // Finaliza o carregamento
       }
     },
 
     // Método para realizar a reserva do livro
     async reserveBook() {
       const bookId = this.book._id;
+      
+      // Obtém o token armazenado no localStorage (ou sessionStorage)
+      const token = localStorage.getItem('token'); // ou sessionStorage.getItem('token')
+
+      if (!token) {
+        alert('Você precisa estar autenticado para reservar o livro.');
+        this.$router.push('/login'); // Redireciona para a página de login
+        return;
+      }
+
       try {
-        const response = await api.reserveBook(bookId); // Requisição para reservar o livro
+        const response = await api.reserveBook(bookId, token); // Passa o token para a requisição
         if (response.status === 200) {
           alert('Livro reservado com sucesso!');
           this.book.reserved = true; // Atualiza a disponibilidade
         }
       } catch (error) {
         console.error('Erro ao reservar livro:', error);
-        console.log(localStorage.getItem('token')); // Verifique se o token está presente
-        alert('Erro ao tentar reservar o livro.');
+        if (error.response && error.response.status === 401) {
+          alert('Você precisa estar autenticado para reservar o livro.');
+          this.$router.push('/login'); // Redireciona para a página de login
+        } else {
+          alert('Erro ao tentar reservar o livro.');
+        }
       }
     },
 
@@ -105,12 +122,22 @@ export default {
     // Envia a avaliação para a API
     async submitRating() {
       const bookId = this.book._id;
+
+      // Obtém o token armazenado no localStorage (ou sessionStorage)
+      const token = localStorage.getItem('token'); // ou sessionStorage.getItem('token')
+
+      if (!token) {
+        alert('Você precisa estar autenticado para avaliar o livro.');
+        this.$router.push('/login'); // Redireciona para a página de login
+        return;
+      }
+
       try {
-        const response = await api.submitRating(bookId, this.userRating); // Envia a avaliação
+        const response = await api.submitRating(bookId, this.userRating, token); // Passa o token para a requisição
         if (response.status === 200) {
           alert('Avaliação registrada!');
-          // Atualiza a avaliação no frontend
-          this.fetchBookDetails(); // Recarrega os detalhes para refletir a nova média
+          // Atualiza diretamente a média no frontend sem precisar fazer outra requisição
+          this.book.rating = response.data.newRating; // Aqui assume-se que a API retorna a nova média
         }
       } catch (error) {
         console.error('Erro ao enviar avaliação:', error);
