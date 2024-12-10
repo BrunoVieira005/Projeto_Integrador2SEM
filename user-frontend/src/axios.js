@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Configuração básica do Axios
 const api = axios.create({
-  baseURL: 'http://localhost:5000/api', 
+  baseURL: 'https://mangebook.onrender.com/api', 
 });
 
 // Interceptor para adicionar o token JWT em cada requisição, se existir

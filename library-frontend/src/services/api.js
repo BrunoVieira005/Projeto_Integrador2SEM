@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Cria instância do Axios com URL para base da API
 const apiClient = axios.create({
-    baseURL: 'http://localhost:3000/api', // URL da API
+    baseURL: 'https://mangebook.onrender.com/api', // URL da API
     headers: {
         'Content-Type': 'application/json', // Define JSON como tipo de conteúdo por padrão
     },
